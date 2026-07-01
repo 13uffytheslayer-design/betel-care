@@ -26,5 +26,4 @@ ENV DB_PATH=/data/data.db
 ENV PORT=3001
 ENV NODE_ENV=production
 EXPOSE 3001
-VOLUME ["/data"]
 CMD ["npx", "tsx", "api/server.ts"]
