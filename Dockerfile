@@ -1,5 +1,6 @@
 # ===== 构建阶段：安装全部依赖 + 构建前端 =====
-FROM node:20-slim AS builder
+# 使用 Node.js 22（pnpm 11+ 需要 Node 22.13+）
+FROM node:22-slim AS builder
 WORKDIR /app
 RUN corepack enable
 # better-sqlite3 原生模块编译工具（prebuilt 不可用时回退本地编译）
@@ -10,7 +11,7 @@ COPY . .
 RUN pnpm build
 
 # ===== 运行阶段：仅生产依赖 + 前端构建产物 =====
-FROM node:20-slim AS runner
+FROM node:22-slim AS runner
 WORKDIR /app
 RUN corepack enable
 RUN apt-get update && apt-get install -y --no-install-recommends python3 make g++ && rm -rf /var/lib/apt/lists/*
